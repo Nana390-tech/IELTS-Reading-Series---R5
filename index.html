@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS Prep Reading Series - R5</title>
+<style>
+  :root{
+    --primary:#1B4D3E;
+    --primary-dark:#123528;
+    --gold:#C99A2E;
+    --gold-soft:#EAC669;
+    --bg:#F4F0E6;
+    --card:#FFFFFF;
+    --ink:#1f2a26;
+    --muted:#6b756f;
+    --line:#e3ddcd;
+    --good:#1f8a4c;
+    --good-bg:#e6f5ec;
+    --bad:#c0392b;
+    --bad-bg:#fbeae8;
+    --sel:#fff7e1;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Segoe UI',Tahoma,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+  header{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;text-align:center;padding:26px 16px 22px}
+  header h1{margin:0;font-size:1.55rem;letter-spacing:.5px}
+  header .sub{margin-top:6px;font-size:.85rem;color:#d8e6df;font-weight:600}
+  .stage{margin-top:11px;display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.14);padding:5px 16px;border-radius:999px;font-size:.78rem;font-weight:700;letter-spacing:.5px}
+  .stage .dots{font-size:.7rem;letter-spacing:3px}
+  .stage .on{color:var(--gold-soft)}
+  .stage .off{opacity:.4}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:18px 16px 60px}
+
+  .scorebar{position:sticky;top:0;z-index:30;background:var(--primary);color:#fff;border-radius:14px;display:flex;justify-content:space-between;align-items:center;padding:12px 18px;margin-bottom:18px;box-shadow:0 6px 18px rgba(0,0,0,.18);flex-wrap:wrap;gap:12px}
+  .scorebar .left{display:flex;gap:22px}
+  .stat{text-align:center}
+  .stat .num{font-size:1.5rem;font-weight:800;line-height:1}
+  .stat .lbl{font-size:.66rem;text-transform:uppercase;letter-spacing:1px;color:#cfe0d8;margin-top:3px}
+  .band-chip{background:var(--gold);color:#3a2c06;border-radius:12px;padding:7px 16px;text-align:center;min-width:96px}
+  .band-chip .big{font-size:1.55rem;font-weight:900;line-height:1}
+  .band-chip .cap{font-size:.62rem;text-transform:uppercase;letter-spacing:.6px;font-weight:700}
+  .band-chip .tgt{margin-top:4px;border-top:1px solid rgba(0,0,0,.18);padding-top:4px;font-size:.62rem}
+
+  .tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+  .tab{flex:1;min-width:150px;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer;text-align:left;transition:.15s;font-family:inherit}
+  .tab .pn{display:block;font-size:.66rem;text-transform:uppercase;letter-spacing:1px;color:var(--muted);font-weight:700}
+  .tab .pt{display:block;font-weight:800;font-size:.98rem;color:var(--ink);margin-top:2px}
+  .tab.active{border-color:var(--primary);background:var(--primary)}
+  .tab.active .pn{color:#bcd3c9}
+  .tab.active .pt{color:#fff}
+
+  .panel{display:none}
+  .panel.active{display:block}
+
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+  @media(max-width:860px){.grid{grid-template-columns:1fr}}
+
+  .passage{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;max-height:74vh;overflow-y:auto;position:sticky;top:96px}
+  @media(max-width:860px){.passage{position:static;max-height:none}}
+  .passage h2{margin:0 0 4px;color:var(--primary);font-size:1.3rem}
+  .passage .lead{font-style:italic;color:var(--muted);margin:0 0 14px;font-size:.92rem}
+  .passage p{margin:0 0 13px;font-size:.95rem;text-align:justify}
+  .passage .plabel{display:inline-block;background:var(--primary);color:#fff;font-weight:800;font-size:.78rem;width:24px;height:24px;line-height:24px;text-align:center;border-radius:6px;margin-right:8px;vertical-align:top}
+
+  .qcol{display:flex;flex-direction:column;gap:16px}
+  .qblock{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+  .qblock .ghead{font-weight:800;color:var(--primary);font-size:1rem;margin-bottom:2px}
+  .qblock .ginstr{font-size:.85rem;color:var(--muted);margin-bottom:12px}
+
+  .q{padding:10px 0;border-top:1px dashed var(--line)}
+  .q:first-of-type{border-top:none}
+  .qtext{font-size:.93rem;margin-bottom:8px}
+  .qtext .n{font-weight:800;color:var(--primary);margin-right:6px}
+
+  .opts{display:flex;flex-direction:column;gap:6px}
+  .opt{display:flex;align-items:flex-start;gap:8px;border:1.5px solid var(--line);border-radius:9px;padding:7px 11px;cursor:pointer;font-size:.9rem;transition:.12s}
+  .opt:hover{border-color:var(--gold)}
+  .opt.sel{background:var(--sel);border-color:var(--gold)}
+  .opt input{margin-top:3px}
+  .opt .ltr{font-weight:800;color:var(--primary);min-width:18px}
+  .opt.correct{background:var(--good-bg);border-color:var(--good)}
+  .opt.wrong{background:var(--bad-bg);border-color:var(--bad)}
+
+  input[type=text]{width:100%;padding:8px 11px;border:1.5px solid var(--line);border-radius:9px;font-size:.92rem;font-family:inherit}
+  input[type=text]:focus{outline:none;border-color:var(--gold)}
+  select{width:100%;padding:8px 11px;border:1.5px solid var(--line);border-radius:9px;font-size:.92rem;font-family:inherit;background:#fff}
+  select:focus{outline:none;border-color:var(--gold)}
+
+  .inline-note{font-size:.83rem;font-weight:700;margin-top:6px;display:none}
+  .inline-note.ok{color:var(--good)}
+  .inline-note.no{color:var(--bad)}
+  .fieldwrap.ok input,.fieldwrap.ok select{border-color:var(--good);background:var(--good-bg)}
+  .fieldwrap.no input,.fieldwrap.no select{border-color:var(--bad);background:var(--bad-bg)}
+
+  .why{font-size:.82rem;color:var(--muted);margin-top:5px;background:var(--bg);border-left:3px solid var(--gold);padding:7px 11px;border-radius:0 8px 8px 0;display:none}
+  .why.show{display:block}
+  .why b{color:var(--primary)}
+
+  .phrasebox{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 13px;font-size:.86rem;margin-bottom:12px}
+  .phrasebox b{color:var(--primary)}
+
+  .gappara{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:13px 15px;font-size:.93rem;line-height:2.5;margin-bottom:12px}
+  .gappara b{color:var(--primary)}
+  .gapwrap{display:inline-flex;align-items:center;gap:4px;vertical-align:middle}
+  .gapwrap input{width:118px;padding:3px 8px;font-size:.88rem;border-radius:7px}
+  .gapselect{width:auto;display:inline-block;padding:3px 6px;font-size:.88rem;border-radius:7px;font-weight:700}
+  .gapnum{font-weight:800;color:var(--primary);font-size:.7rem;background:#fff;border:1px solid var(--line);border-radius:5px;padding:1px 5px}
+  .gapfb-title{font-weight:800;color:var(--primary);font-size:.85rem;margin:2px 0 6px}
+  .gapfb-row{display:flex;gap:9px;align-items:flex-start;padding:8px 0;border-top:1px dashed var(--line)}
+  .gapfb-row:first-of-type{border-top:none}
+  .gapfb-row .n{margin-right:0}
+  .fb-body{flex:1}
+  .fb-body .why{margin-top:4px}
+
+  .passctrl{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:16px;padding-top:16px;border-top:2px solid var(--line)}
+  .passtally{font-weight:800;color:var(--primary);font-size:.95rem;margin-left:auto}
+
+  .controls{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:30px 0 8px}
+  .btn{border:none;border-radius:10px;padding:12px 22px;font-size:.92rem;font-weight:800;cursor:pointer;font-family:inherit;transition:.15s}
+  .btn-sm{padding:10px 18px;font-size:.85rem}
+  .btn-main{background:var(--gold);color:#3a2c06}
+  .btn-main:hover{background:var(--gold-soft)}
+  .btn-out{background:#fff;color:var(--primary);border:2px solid var(--primary)}
+  .btn-out:hover{background:var(--primary);color:#fff}
+  .btn-ghost{background:#fff;color:var(--muted);border:2px solid var(--line)}
+  .btn-ghost:hover{border-color:var(--muted)}
+  .btn:disabled{opacity:.55;cursor:default}
+
+  .result{display:none;background:var(--card);border:2px solid var(--gold);border-radius:16px;padding:24px;text-align:center;margin-top:22px}
+  .result.show{display:block}
+  .result .score{font-size:2.6rem;font-weight:900;color:var(--primary)}
+  .result .bandbig{font-size:1.4rem;font-weight:800;color:var(--gold);margin:4px 0}
+  .result .msg{font-size:.95rem;color:var(--muted);max-width:560px;margin:8px auto 0}
+  .result .bk{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:.85rem}
+  .result .bk span{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:6px 12px;font-weight:700}
+
+  footer{text-align:center;color:var(--muted);font-size:.82rem;padding:24px 16px 36px;line-height:1.7}
+  footer .credit{font-weight:800;color:var(--primary)}
+  .hidefile{display:none}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>IELTS Prep Reading Series - R5</h1>
+  <div class="sub">HCT Advanced English Courses · 3 Passages · 40 Questions · Interactive Practice</div>
+  <div class="stage">Stage 5 of 6 <span class="dots"><span class="on">●●●●●</span><span class="off">●</span></span></div>
+</header>
+
+<div class="wrap">
+
+  <div class="scorebar">
+    <div class="left">
+      <div class="stat"><div class="num" id="answered">0</div><div class="lbl">Answered</div></div>
+      <div class="stat"><div class="num" id="correctCount">0</div><div class="lbl">Correct</div></div>
+      <div class="stat"><div class="num">/40</div><div class="lbl">Total</div></div>
+    </div>
+    <div class="band-chip">
+      <div class="big" id="bandNum">—</div>
+      <div class="cap">Est. Band</div>
+      <div class="tgt">🎯 Target 6.0</div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-p="0"><span class="pn">Passage 1 · Q 1–13</span><span class="pt">Manatees</span></button>
+    <button class="tab" data-p="1"><span class="pn">Passage 2 · Q 14–26</span><span class="pt">Procrastination</span></button>
+    <button class="tab" data-p="2"><span class="pn">Passage 3 · Q 27–40</span><span class="pt">Robot Umpires</span></button>
+  </div>
+
+  <div id="panels"></div>
+
+  <div class="controls">
+    <button class="btn btn-main" id="finishBtn">🏁 Finish Test &amp; Get Band</button>
+    <button class="btn btn-out" id="saveBtn">💾 Save Progress</button>
+    <button class="btn btn-out" id="loadBtn">📂 Load Progress</button>
+    <button class="btn btn-ghost" id="resetBtn">↻ Reset All</button>
+    <input type="file" id="fileIn" class="hidefile" accept=".json">
+  </div>
+
+  <div class="result" id="result">
+    <div class="score" id="rScore">0 / 40</div>
+    <div class="bandbig" id="rBand">Estimated Band: —</div>
+    <div class="msg" id="rMsg"></div>
+    <div class="bk" id="rBreak"></div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="credit">Designed by: Nazila Motahari</div>
+  <div>IELTS Prep Reading Series · R5 · HCT Advanced English Courses · For classroom use.</div>
+  <div style="margin-top:4px">The same Band means the same level across the whole series. Keep climbing to Band 6.0. 🎯</div>
+</footer>
+
+<script>
+/* ============================ DATA ============================ */
+var PASSAGES = [
+  {
+    title:"Manatees",
+    lead:"",
+    labelled:false,
+    paras:[
+      "Manatees, also known as sea cows, are aquatic mammals that belong to a group of animals called Sirenia. This group also contains dugongs. Dugongs and manatees look quite alike \u2013 they are similar in size, colour and shape, and both have flexible flippers for forelimbs. However, the manatee has a broad, rounded tail, whereas the dugong\u2019s is fluked, like that of a whale. There are three species of manatees: the West Indian manatee (Trichechus manatus), the African manatee (Trichechus senegalensis) and the Amazonian manatee (Trichechus inunguis).",
+      "Unlike most mammals, manatees have only six bones in their neck \u2013 most others, including humans and giraffes, have seven. This short neck allows a manatee to move its head up and down, but not side to side. To see something on its left or its right, a manatee must turn its entire body, steering with its flippers. Manatees have pectoral flippers but no back limbs, only a tail for propulsion. They do have pelvic bones, however \u2013 a leftover from their evolution from a four-legged to a fully aquatic animal. Manatees share some visual similarities to elephants. Like elephants, manatees have thick, wrinkled skin. They also have some hairs covering their bodies which help them sense vibrations in the water around them.",
+      "Seagrasses and other marine plants make up most of a manatee\u2019s diet. Manatees spend about eight hours each day grazing and uprooting plants. They eat up to 15% of their weight in food each day. African manatees are omnivorous \u2013 studies have shown that molluscs and fish make up a small part of their diets. West Indian and Amazonian manatees are both herbivores.",
+      "Manatees\u2019 teeth are all molars \u2013 flat, rounded teeth for grinding food. Due to manatees\u2019 abrasive aquatic plant diet, these teeth get worn down and they eventually fall out, so they continually grow new teeth that get pushed forward to replace the ones they lose. Instead of having incisors to grasp their food, manatees have lips which function like a pair of hands to help tear food away from the seafloor.",
+      "Manatees are fully aquatic, but as mammals, they need to come up to the surface to breathe. When awake, they typically surface every two to four minutes, but they can hold their breath for much longer. Adult manatees sleep underwater for 10\u201312 hours a day, but they come up for air every 15\u201320 minutes. Active manatees need to breathe more frequently. It\u2019s thought that manatees use their muscular diaphragm and breathing to adjust their buoyancy. They may use diaphragm contractions to compress and store gas in folds in their large intestine to help them float.",
+      "The West Indian manatee reaches about 3.5 metres long and weighs on average around 500 kilograms. It moves between fresh water and salt water, taking advantage of coastal mangroves and coral reefs, rivers, lakes and inland lagoons. There are two subspecies of West Indian manatee: the Antillean manatee is found in waters from the Bahamas to Brazil, whereas the Florida manatee is found in US waters, although some individuals have been recorded in the Bahamas. In winter, the Florida manatee is typically restricted to Florida. When the ambient water temperature drops below 20\u00b0C, it takes refuge in naturally and artificially warmed water, such as at the warm-water outfalls from power plants.",
+      "The African manatee is also about 3.5 metres long and found in the sea along the west coast of Africa, from Mauritania down to Angola. The species also makes use of rivers, with the mammals seen in landlocked countries such as Mali and Niger. The Amazonian manatee is the smallest species, though it is still a big animal. It grows to about 2.5 metres long and 350 kilograms. Amazonian manatees favour calm, shallow waters that are above 23\u00b0C. This species is found in fresh water in the Amazon Basin in Brazil, as well as in Colombia, Ecuador and Peru.",
+      "All three manatee species are endangered or at a heightened risk of extinction. The African manatee and Amazonian manatee are both listed as Vulnerable by the International Union for Conservation of Nature (IUCN). It is estimated that 140,000 Amazonian manatees were killed between 1935 and 1954 for their meat, fat and skin, with the latter used to make leather. In more recent years, African manatee decline has been tied to incidental capture in fishing nets and hunting. Manatee hunting is now illegal in every country the African species is found in.",
+      "The two subspecies of West Indian manatee are listed as Endangered by the IUCN. Both are also expected to undergo a decline of 20% over the next 40 years. A review of almost 1,800 cases of entanglement in fishing nets and of plastic consumption among marine mammals in US waters from 2009 to 2020 found that at least 700 cases involved manatees. The chief cause of death in Florida manatees is boat strikes. However, laws in certain parts of Florida now limit boat speeds during winter, allowing slow-moving manatees more time to respond."
+    ],
+    groups:[
+      {
+        head:"Questions 1\u20136",
+        instr:"Complete the notes below. Choose ONE WORD AND/OR A NUMBER from the passage for each answer.",
+        intro:"",
+        qs:[
+          {id:1,type:"text",text:"Appearance: look similar to dugongs, but with a differently shaped ____",ans:["tail"],why:"However, the manatee has a broad, rounded tail, whereas the dugong\u2019s is fluked, like that of a whale."},
+          {id:2,type:"text",text:"Movement: need to use their ____ to help turn their bodies around in order to look sideways",ans:["flippers"],why:"To see something on its left or its right, a manatee must turn its entire body, steering with its flippers."},
+          {id:3,type:"text",text:"Movement: sense vibrations in the water by means of ____ on their skin",ans:["hairs","hair"],why:"They also have some hairs covering their bodies which help them sense vibrations in the water around them."},
+          {id:4,type:"text",text:"Feeding: eat mainly aquatic vegetation, such as ____",ans:["seagrasses","seagrass"],why:"Seagrasses and other marine plants make up most of a manatee\u2019s diet."},
+          {id:5,type:"text",text:"Feeding: grasp and pull up plants with their ____",ans:["lips"],why:"Instead of having incisors to grasp their food, manatees have lips which function like a pair of hands to help tear food away from the seafloor."},
+          {id:6,type:"text",text:"Breathing: may regulate the ____ of their bodies by using muscles of the diaphragm to store air internally",ans:["buoyancy"],why:"It\u2019s thought that manatees use their muscular diaphragm and breathing to adjust their buoyancy."}
+        ]
+      },
+      {
+        head:"Questions 7\u201313",
+        instr:"Do the following statements agree with the information given in the passage? Choose TRUE, FALSE or NOT GIVEN.",
+        intro:"",
+        opts:["TRUE","FALSE","NOT GIVEN"],
+        qs:[
+          {id:7,type:"tfng",text:"West Indian manatees can be found in a variety of different aquatic habitats.",ans:"TRUE",why:"It moves between fresh water and salt water, taking advantage of coastal mangroves and coral reefs, rivers, lakes and inland lagoons."},
+          {id:8,type:"tfng",text:"The Florida manatee lives in warmer waters than the Antillean manatee.",ans:"NOT GIVEN",why:"The passage describes the Florida manatee sheltering in warm water below 20\u00b0C, but never compares its water temperature with that of the Antillean manatee."},
+          {id:9,type:"tfng",text:"The African manatee\u2019s range is limited to coastal waters between the West African countries of Mauritania and Angola.",ans:"FALSE",why:"The species also makes use of rivers, with the mammals seen in landlocked countries such as Mali and Niger \u2014 so it is not limited to coastal waters."},
+          {id:10,type:"tfng",text:"The extent of the loss of Amazonian manatees in the mid-twentieth century was only revealed many years later.",ans:"NOT GIVEN",why:"The text states 140,000 were killed between 1935 and 1954, but says nothing about when the scale of this loss was discovered."},
+          {id:11,type:"tfng",text:"It is predicted that West Indian manatee populations will fall in the coming decades.",ans:"TRUE",why:"Both are also expected to undergo a decline of 20% over the next 40 years."},
+          {id:12,type:"tfng",text:"The risk to manatees from entanglement and plastic consumption increased significantly in the period 2009\u20132020.",ans:"NOT GIVEN",why:"The review found at least 700 of almost 1,800 cases involved manatees, but the passage does not say the risk increased over that period."},
+          {id:13,type:"tfng",text:"There is some legislation in place which aims to reduce the likelihood of boat strikes on manatees in Florida.",ans:"TRUE",why:"However, laws in certain parts of Florida now limit boat speeds during winter, allowing slow-moving manatees more time to respond."}
+        ]
+      }
+    ]
+  },
+
+  {
+    title:"Procrastination",
+    lead:"A psychologist explains why we put off important tasks and how we can break this habit.",
+    labelled:true,
+    paras:[
+      "Procrastination is the habit of delaying a necessary task, usually by focusing on less urgent, more enjoyable, and easier activities instead. We all do it from time to time. We might be composing a message to a friend who we have to let down, or putting together an important report for college or work; we\u2019re doing our best to avoid doing the job at hand, but deep down we know that we should just be getting on with it. Unfortunately, berating ourselves won\u2019t stop us procrastinating again. In fact, it\u2019s one of the worst things we can do. This matters because, as my research shows, procrastination doesn\u2019t just waste time, but is actually linked to other problems, too.",
+      "Contrary to popular belief, procrastination is not due to laziness or poor time management. Scientific studies suggest procrastination is, in fact, caused by poor mood management. This makes sense if we consider that people are more likely to put off starting or completing tasks that they are really not keen to do. If just thinking about the task threatens our sense of self-worth or makes us anxious, we will be more likely to put it off. Research involving brain imaging has found that areas of the brain linked to detection of threats and emotion regulation are actually different in people who chronically procrastinate compared to those who don\u2019t procrastinate frequently.",
+      "Tasks that are emotionally loaded or difficult, such as preparing for exams, are prime candidates for procrastination. People with low self-esteem are more likely to procrastinate. Another group of people who tend to procrastinate are perfectionists, who worry their work will be judged harshly by others. We know that if we don\u2019t finish that report or complete those home repairs, then what we did can\u2019t be evaluated. When we avoid such tasks, we also avoid the negative emotions associated with them. This is rewarding, and it conditions us to use procrastination to repair our mood. If we engage in more enjoyable tasks instead, we get another mood boost. In the long run, however, procrastination isn\u2019t an effective way of managing emotions. The \u2018mood repair\u2019 we experience is temporary. Afterwards, people tend to be left with a sense of guilt that not only increases their negative mood, but also reinforces their tendency to procrastinate.",
+      "So why is this such a problem? When most people think of the costs of procrastination, they think of the toll on productivity. For example, studies have shown that procrastination negatively impacts on student performance. But putting off reading textbooks and writing essays may affect other areas of students\u2019 lives. In one study of over 3,000 German students over a six-month period, those who reported procrastinating over their university work were also more likely to engage in study-related misconduct, such as cheating and plagiarism. But the behaviour that procrastination was most closely linked with was using fraudulent excuses to get deadline extensions. Other research shows that employees on average spend almost a quarter of their workday procrastinating, and again this is linked with negative outcomes. In fact, in one US survey of over 22,000 employees, participants who said they regularly procrastinated had less annual income and less employment stability. For every one-point increase on a measure of chronic procrastination, annual income decreased by US$15,000.",
+      "Procrastination also correlates with serious health and well-being problems. A tendency to procrastinate is linked to poor mental health, including higher levels of depression and anxiety. Across numerous studies, I\u2019ve found people who regularly procrastinate report a greater number of health issues, such as headaches, flu and colds, and digestive issues. They also experience higher levels of stress and poor sleep quality. They are less likely to practise healthy behaviours, such as eating a healthy diet and regularly exercising, and use destructive coping strategies to manage their stress. In one study of over 700 people, I found people prone to procrastination had a 63% greater risk of poor heart health after accounting for other personality traits and demographics.",
+      "Finding better ways of managing our emotions is one route out of the vicious cycle of procrastination. An important first step is to manage our environment and how we view the task. There are a number of evidence-based strategies that can help us fend off distractions that can occupy our minds when we should be focusing on the thing we should be getting on with. For example, reminding ourselves about why the task is important and valuable can increase positive feelings towards it. Forgiving ourselves and feeling compassion when we procrastinate can help break the procrastination cycle. We should admit that we feel bad, but not be overly critical of ourselves. We should remind ourselves that we\u2019re not the first person to procrastinate, nor the last. Doing this can take the edge off the negative feelings we have about ourselves when we procrastinate. This can all make it easier to get back on track."
+    ],
+    groups:[
+      {
+        head:"Questions 14\u201316",
+        instr:"The passage has six paragraphs, A\u2013F. Which paragraph contains the following information? You may use any letter more than once.",
+        intro:"",
+        opts:["A","B","C","D","E","F"],
+        qs:[
+          {id:14,type:"para",text:"mention of false assumptions about why people procrastinate",ans:"B",why:"Paragraph B: \u201cContrary to popular belief, procrastination is not due to laziness or poor time management.\u201d"},
+          {id:15,type:"para",text:"reference to the realisation that others also procrastinate",ans:"F",why:"Paragraph F: \u201cWe should remind ourselves that we\u2019re not the first person to procrastinate, nor the last.\u201d"},
+          {id:16,type:"para",text:"neurological evidence of a link between procrastination and emotion",ans:"B",why:"Paragraph B: brain imaging found areas linked to detection of threats and emotion regulation differ in chronic procrastinators."}
+        ]
+      },
+      {
+        head:"Questions 17\u201322",
+        instr:"Complete the summary below. Choose ONE WORD ONLY from the passage for each answer.",
+        type:"gapfill",
+        gid:"q17",
+        template:"<b>What makes us procrastinate?</b><br>Many people think that procrastination is the result of {{17}}. Others believe it to be the result of an inability to organise time efficiently. But scientific studies suggest that procrastination is actually due to poor mood management. The tasks we are most likely to put off are those that could damage our self-esteem or cause us to feel {{18}} when we think about them. Research comparing chronic procrastinators with other people even found differences in the brain regions associated with regulating emotions and identifying {{19}}. Emotionally loaded and difficult tasks often cause us to procrastinate. Getting ready to take {{20}} might be a typical example of one such task. People who are likely to procrastinate tend to be either {{21}} or those with low self-esteem. Procrastination is only a short-term measure for managing emotions. It\u2019s often followed by a feeling of {{22}}, which worsens our mood and leads to more procrastination.",
+        qs:[
+          {id:17,type:"text",text:"",ans:["laziness"],why:"Contrary to popular belief, procrastination is not due to laziness or poor time management."},
+          {id:18,type:"text",text:"",ans:["anxious"],why:"If just thinking about the task threatens our sense of self-worth or makes us anxious, we will be more likely to put it off."},
+          {id:19,type:"text",text:"",ans:["threats","threat"],why:"...areas of the brain linked to detection of threats and emotion regulation are actually different..."},
+          {id:20,type:"text",text:"",ans:["exams","exam"],why:"Tasks that are emotionally loaded or difficult, such as preparing for exams, are prime candidates for procrastination."},
+          {id:21,type:"text",text:"",ans:["perfectionists","perfectionist"],why:"Another group of people who tend to procrastinate are perfectionists, who worry their work will be judged harshly by others."},
+          {id:22,type:"text",text:"",ans:["guilt"],why:"Afterwards, people tend to be left with a sense of guilt that not only increases their negative mood, but also reinforces their tendency to procrastinate."}
+        ]
+      },
+      {
+        head:"Questions 23\u201324",
+        instr:"Choose TWO letters, A\u2013E. Which TWO comparisons between employees who often procrastinate and those who do not are mentioned in the text?",
+        intro:"",
+        type:"two",
+        choices:[
+          {ltr:"A",txt:"Their salaries are lower."},
+          {ltr:"B",txt:"The quality of their work is inferior."},
+          {ltr:"C",txt:"They don\u2019t keep their jobs for as long."},
+          {ltr:"D",txt:"They don\u2019t enjoy their working lives as much."},
+          {ltr:"E",txt:"They have poorer relationships with colleagues."}
+        ],
+        ans:["A","C"],
+        gid:"q23",
+        why:"In one US survey of over 22,000 employees, regular procrastinators had less annual income (A) and less employment stability (C)."
+      },
+      {
+        head:"Questions 25\u201326",
+        instr:"Choose TWO letters, A\u2013E. Which TWO recommendations for getting out of a cycle of procrastination does the writer give?",
+        intro:"",
+        type:"two",
+        choices:[
+          {ltr:"A",txt:"not judging ourselves harshly"},
+          {ltr:"B",txt:"setting ourselves manageable aims"},
+          {ltr:"C",txt:"rewarding ourselves for tasks achieved"},
+          {ltr:"D",txt:"prioritising tasks according to their importance"},
+          {ltr:"E",txt:"avoiding things that stop us concentrating on our tasks"}
+        ],
+        ans:["A","E"],
+        gid:"q25",
+        why:"Paragraph F: strategies that help us fend off distractions (E), and forgiving ourselves rather than being overly critical (A)."
+      }
+    ]
+  },
+
+  {
+    title:"Invasion of the Robot Umpires",
+    lead:"",
+    labelled:false,
+    paras:[
+      "A few years ago, Fred DeJesus from Brooklyn, New York became the first umpire in a minor league baseball game to use something called the Automated Ball-Strike System (ABS), often referred to as the \u2018robo-umpire\u2019. Instead of making any judgments himself about a strike, DeJesus had decisions fed to him through an earpiece, connected to a modified missile-tracking system. The contraption looked like a large black pizza box with one glowing green eye; it was mounted above the press stand.",
+      "Major League Baseball (MLB), who had commissioned the system, wanted human umpires to announce the calls, just as they would have done in the past. When the first pitch came in, a recorded voice told DeJesus it was a strike. Previously, calling a strike was a judgment call on the part of the umpire. Even if the batter does not hit the ball, a pitch that passes through the \u2018strike zone\u2019 (an imaginary zone about seventeen inches wide, stretching from the batter\u2019s knees to the middle of his chest) is considered a strike. During that first game, when DeJesus announced calls, there was no heckling and no shouted disagreement. Nobody said a word.",
+      "For a hundred and fifty years or so, the strike zone has been the game\u2019s animating force \u2013 countless arguments between a team\u2019s manager and the umpire have taken place over its boundaries and whether a ball had crossed through it. The rules of play have evolved in various stages. Today, everyone knows that you may scream your disagreement in an umpire\u2019s face, but you must never shout personal abuse at them or touch them. That\u2019s a no-no. When the robo-umpires came, however, the arguments stopped.",
+      "During the first robo-umpire season, players complained about some strange calls. In response, MLB decided to tweak the dimensions of the zone, and the following year the consensus was that ABS is profoundly consistent. MLB says the device is near-perfect, precise to within fractions of an inch. \u201cIt\u2019ll reduce controversy in the game, and be good for the game,\u201d says Rob Manfred, who is Commissioner for MLB. But the question is whether controversy is worth reducing, or whether it is the sign of a human hand.",
+      "A human, at least, yells back. When I spoke with Frank Viola, a coach for a North Carolina team, he said that ABS works as designed, but that it was also unforgiving and pedantic, almost legalistic. \u201cManfred is a lawyer,\u201d Viola noted. Some pitchers have complained that, compared with a human, the robot\u2019s strike zone seems too precise. Viola was once a major-league player himself. When he was pitching, he explained, umpires rewarded skill. \u201cThrow it where you aimed, and it would be a strike, even if it was an inch or two outside. There was a dialogue between pitcher and umpire.\u201d",
+      "The executive tasked with running the experiment for MLB is Morgan Sword, who\u2019s in charge of baseball operations. According to Sword, ABS was part of a larger project to make baseball more exciting since executives are terrified of losing younger fans, as has been the case with horse racing and boxing. He explains how they began the process by asking fans what version of baseball they found most exciting. The results showed that everyone wanted more action: more hits, more defense, more baserunning. This type of baseball essentially hasn\u2019t existed since the 1960s, when the hundred-mile-an-hour fastball, which is difficult to hit and control, entered the game. It flattened the game into strikeouts, walks, and home runs \u2013 a type of play lacking much action.",
+      "Sword\u2019s team brainstormed potential fixes. Any rule that existed, they talked about changing \u2013 from changing the bats to changing the geometry of the field. But while all of these were ruled out as potential fixes, ABS was seen as a perfect vehicle for change. According to Sword, once you get the technology right, you can load any strike zone you want into the system. \u201cIt might be a triangle, or a blob, or something shaped like Texas. Over time, as baseball evolves, ABS can allow the zone to change with it.\u201d",
+      "In the past twenty years, sports have moved away from judgment calls. Soccer has Video Assistant Referees (for offside decisions, for example). Tennis has Hawk-Eye (for line calls, for example). For almost a decade, baseball has used instant replay on the base paths. This is widely liked, even if the precision can sometimes cause problems. But these applications deal with something physical: bases, lines, goals. The boundaries of action are precise, delineated like the keys of a piano. This is not the case with ABS and the strike zone. Historically, a certain discretion has been appreciated.",
+      "I decided to email Alva No\u00eb, a professor at Berkeley University and a baseball fan, for his opinion. \u201cHardly a day goes by that I don\u2019t wake up and run through the reasons that this [robo-umpires] is such a terrible idea,\u201d he replied. He later told me, \u201cThis is part of a movement to use algorithms to take the hard choices of living out of life.\u201d Perhaps he\u2019s right. We watch baseball to kill time, not to maximize it. Some players I have met take a dissenting stance toward the robots too, believing that accuracy is not the answer.",
+      "According to Joe Russo, who plays for a New Jersey team, \u201cWith technology, people just want everything to be perfect. That\u2019s not reality. I think perfect would be weird. Your teams are always winning, work is always just great, there\u2019s always money in your pocket, your car never breaks down. What is there to talk about?\u201d"
+    ],
+    groups:[
+      {
+        head:"Questions 27\u201332",
+        instr:"Do the following statements agree with the claims of the writer? Choose YES, NO or NOT GIVEN.",
+        intro:"",
+        opts:["YES","NO","NOT GIVEN"],
+        qs:[
+          {id:27,type:"ynng",text:"When DeJesus first used ABS, he shared decision-making about strikes with it.",ans:"NO",why:"DeJesus had decisions fed to him through an earpiece \u2014 the system decided, so he did not share the decision-making."},
+          {id:28,type:"ynng",text:"MLB considered it necessary to amend the size of the strike zone when criticisms were received from players.",ans:"YES",why:"In response, MLB decided to tweak the dimensions of the zone."},
+          {id:29,type:"ynng",text:"MLB is keen to justify the money spent on improving the accuracy of ABS\u2019s calculations.",ans:"NOT GIVEN",why:"The writer raises whether controversy is worth reducing, but never says MLB wants to justify money spent on accuracy."},
+          {id:30,type:"ynng",text:"The hundred-mile-an-hour fastball led to a more exciting style of play.",ans:"NO",why:"The fastball flattened the game into strikeouts, walks, and home runs \u2014 a type of play lacking much action."},
+          {id:31,type:"ynng",text:"The differing proposals for alterations to the baseball bat led to fierce debate on Sword\u2019s team.",ans:"NOT GIVEN",why:"Sword\u2019s team talked about changing the bats among other rules, but the text does not mention any fierce debate about it."},
+          {id:32,type:"ynng",text:"ABS makes changes to the shape of the strike zone feasible.",ans:"YES",why:"Once the technology is right, you can load any strike zone you want \u2014 a triangle, a blob, or something shaped like Texas."}
+        ]
+      },
+      {
+        head:"Questions 33\u201337",
+        instr:"Complete the summary using the list of phrases, A\u2013H, below. Choose the correct letter for each gap.",
+        type:"matchfill",
+        gid:"q33",
+        phrases:[
+          ["A","pitch boundary"],["B","numerous disputes"],["C","team tactics"],["D","subjective assessment"],
+          ["E","widespread approval"],["F","former roles"],["G","total silence"],["H","perceived area"]
+        ],
+        template:"<b>Calls by the umpire</b><br>Even after ABS was developed, MLB still wanted human umpires to shout out decisions as they had in their {{33}}. The umpire\u2019s job had, at one time, required a {{34}} about whether a ball was a strike. A ball is considered a strike when the batter does not hit it and it crosses through a {{35}} extending approximately from the batter\u2019s knee to his chest. In the past, {{36}} over strike calls were not uncommon, but today everyone accepts the complete ban on pushing or shoving the umpire. One difference, however, is that during the first game DeJesus used ABS, strike calls were met with {{37}}.",
+        qs:[
+          {id:33,type:"match",text:"",ans:"F",why:"MLB wanted human umpires to announce the calls, just as they would have done in the past (their former roles)."},
+          {id:34,type:"match",text:"",ans:"D",why:"Previously, calling a strike was a judgment call on the part of the umpire (a subjective assessment)."},
+          {id:35,type:"match",text:"",ans:"H",why:"A pitch that passes through the \u2018strike zone\u2019 \u2014 an imaginary zone stretching from the knees to the middle of the chest (a perceived area)."},
+          {id:36,type:"match",text:"",ans:"B",why:"Countless arguments between a team\u2019s manager and the umpire have taken place over its boundaries (numerous disputes)."},
+          {id:37,type:"match",text:"",ans:"G",why:"During that first game there was no heckling and no shouted disagreement. Nobody said a word (total silence)."}
+        ]
+      },
+      {
+        head:"Questions 38\u201340",
+        instr:"Choose the correct letter, A, B, C or D.",
+        intro:"",
+        qs:[
+          {id:38,type:"mcq",text:"What does the writer suggest about ABS in the fifth paragraph?",
+            choices:[["A","It is bound to make key decisions that are wrong."],["B","It may reduce some of the appeal of the game."],["C","It will lead to the disappearance of human umpires."],["D","It may increase calls for the rules of baseball to be changed."]],ans:"B",
+            why:"Viola explains that with human umpires there was a dialogue between pitcher and umpire \u2014 suggesting ABS may reduce some of the game\u2019s appeal."},
+          {id:39,type:"mcq",text:"Morgan Sword says that the introduction of ABS",
+            choices:[["A","was regarded as an experiment without a guaranteed outcome."],["B","was intended to keep up with developments in other sports."],["C","was a response to changing attitudes about the role of sport."],["D","was an attempt to ensure baseball retained a young audience."]],ans:"D",
+            why:"ABS was part of a larger project to make baseball more exciting since executives are terrified of losing younger fans."},
+          {id:40,type:"mcq",text:"Why does the writer include the views of No\u00eb and Russo?",
+            choices:[["A","to show that attitudes to technology vary widely"],["B","to argue that people have unrealistic expectations of sport"],["C","to indicate that accuracy is not the same thing as enjoyment"],["D","to suggest that the number of baseball fans needs to increase"]],ans:"C",
+            why:"Some players believe that accuracy is not the answer \u2014 showing accuracy is not the same thing as enjoyment."}
+        ]
+      }
+    ]
+  }
+];
+
+var PASS_TOTAL=[13,13,14];
+
+/* ============================ STATE ============================ */
+var state = {};
+var twoState = {q23:[], q25:[]};
+var passScore = [null,null,null];
+var finished = false;
+
+/* ============================ HELPERS ============================ */
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function normalize(s){ return String(s||'').toLowerCase().trim().replace(/[\.\,\;\:\!\?\u2019']/g,''); }
+
+/* ============================ RENDER ============================ */
+function buildPassageHTML(p){
+  var h = '<div class="passage"><h2>'+esc(p.title)+'</h2>';
+  if(p.lead){ h += '<p class="lead">'+esc(p.lead)+'</p>'; }
+  for(var i=0;i<p.paras.length;i++){
+    if(p.labelled){
+      var L = String.fromCharCode(65+i);
+      h += '<p><span class="plabel">'+L+'</span>'+esc(p.paras[i])+'</p>';
+    } else {
+      h += '<p>'+esc(p.paras[i])+'</p>';
+    }
+  }
+  return h+'</div>';
+}
+
+function radioGroup(q,opts){
+  var h='<div class="opts">';
+  for(var i=0;i<opts.length;i++){
+    var o=opts[i];
+    h += '<label class="opt" data-q="'+q.id+'" data-v="'+esc(o)+'">'
+       + '<input type="radio" name="q'+q.id+'" value="'+esc(o)+'">'
+       + '<span>'+esc(o)+'</span></label>';
+  }
+  return h+'</div>';
+}
+function mcqGroup(q){
+  var h='<div class="opts">';
+  for(var i=0;i<q.choices.length;i++){
+    var c=q.choices[i];
+    h += '<label class="opt" data-q="'+q.id+'" data-v="'+c[0]+'">'
+       + '<input type="radio" name="q'+q.id+'" value="'+c[0]+'">'
+       + '<span class="ltr">'+c[0]+'</span><span>'+esc(c[1])+'</span></label>';
+  }
+  return h+'</div>';
+}
+
+function feedbackRows(g){
+  var h='<div class="gapfb" id="gapfb_'+g.gid+'" style="display:none">';
+  h += '<div class="gapfb-title">📋 Answers &amp; explanations</div>';
+  for(var j=0;j<g.qs.length;j++){
+    var qf=g.qs[j];
+    h += '<div class="gapfb-row"><span class="n">'+qf.id+'</span><div class="fb-body">'
+       + '<div class="inline-note" id="note'+qf.id+'"></div>'
+       + '<div class="why" id="why'+qf.id+'"></div></div></div>';
+  }
+  return h+'</div>';
+}
+
+function buildGroupHTML(g){
+  var h='<div class="qblock" data-gid="'+(g.gid||'')+'">';
+  h += '<div class="ghead">'+esc(g.head)+'</div>';
+  h += '<div class="ginstr">'+esc(g.instr)+'</div>';
+  if(g.intro){ h += '<div class="phrasebox">'+g.intro+'</div>'; }
+
+  if(g.type==="two"){
+    h += '<div class="opts">';
+    for(var i=0;i<g.choices.length;i++){
+      var c=g.choices[i];
+      h += '<label class="opt" data-two="'+g.gid+'" data-v="'+c.ltr+'">'
+         + '<input type="checkbox" value="'+c.ltr+'">'
+         + '<span class="ltr">'+c.ltr+'</span><span>'+esc(c.txt)+'</span></label>';
+    }
+    h += '</div>';
+    h += '<div class="inline-note" id="'+g.gid+'note"></div>';
+    h += '<div class="why" id="'+g.gid+'why"></div>';
+    return h+'</div>';
+  }
+
+  if(g.type==="gapfill"){
+    var tpl=g.template.replace(/\{\{(\d+)\}\}/g, function(m,id){
+      return '<span class="fieldwrap gapwrap" id="fw'+id+'"><span class="gapnum">'+id+'</span><input type="text" id="in'+id+'" autocomplete="off"></span>';
+    });
+    h += '<div class="gappara">'+tpl+'</div>';
+    h += feedbackRows(g);
+    return h+'</div>';
+  }
+
+  if(g.type==="matchfill"){
+    var bank='<div class="phrasebox">';
+    for(var k=0;k<g.phrases.length;k++){ bank += '<b>'+g.phrases[k][0]+'</b>. '+esc(g.phrases[k][1])+(k<g.phrases.length-1?' &nbsp; ':''); }
+    h += bank+'</div>';
+    var optsHtml='<option value="">\u2014</option>';
+    for(var o=0;o<g.phrases.length;o++){ optsHtml+='<option value="'+g.phrases[o][0]+'">'+g.phrases[o][0]+'</option>'; }
+    var mtpl=g.template.replace(/\{\{(\d+)\}\}/g, function(m,id){
+      return '<span class="fieldwrap gapwrap" id="fw'+id+'"><span class="gapnum">'+id+'</span><select class="gapselect" id="in'+id+'">'+optsHtml+'</select></span>';
+    });
+    h += '<div class="gappara">'+mtpl+'</div>';
+    h += feedbackRows(g);
+    return h+'</div>';
+  }
+
+  for(var j=0;j<g.qs.length;j++){
+    var q=g.qs[j];
+    h += '<div class="q" id="qrow'+q.id+'">';
+    if(q.type==="text"){
+      h += '<div class="qtext"><span class="n">'+q.id+'</span>'+esc(q.text)+'</div>';
+      h += '<div class="fieldwrap" id="fw'+q.id+'"><input type="text" id="in'+q.id+'" autocomplete="off" placeholder="Type your answer"></div>';
+    } else if(q.type==="tfng"||q.type==="ynng"){
+      h += '<div class="qtext"><span class="n">'+q.id+'</span>'+esc(q.text)+'</div>'+radioGroup(q,g.opts);
+    } else if(q.type==="para"){
+      h += '<div class="qtext"><span class="n">'+q.id+'</span>'+esc(q.text)+'</div>';
+      var sel='<div class="fieldwrap" id="fw'+q.id+'"><select id="in'+q.id+'"><option value="">\u2014 choose \u2014</option>';
+      for(var m=0;m<g.opts.length;m++){ sel+='<option value="'+g.opts[m]+'">'+g.opts[m]+'</option>'; }
+      h += sel+'</select></div>';
+    } else if(q.type==="mcq"){
+      h += '<div class="qtext"><span class="n">'+q.id+'</span>'+esc(q.text)+'</div>'+mcqGroup(q);
+    }
+    h += '<div class="inline-note" id="note'+q.id+'"></div>';
+    h += '<div class="why" id="why'+q.id+'"></div>';
+    h += '</div>';
+  }
+  return h+'</div>';
+}
+
+function render(){
+  var wrap=document.getElementById('panels');
+  var html='';
+  for(var pi=0;pi<PASSAGES.length;pi++){
+    var p=PASSAGES[pi];
+    html += '<div class="panel'+(pi===0?' active':'')+'" data-panel="'+pi+'">';
+    html += '<div class="grid">'+buildPassageHTML(p)+'<div class="qcol">';
+    for(var gi=0;gi<p.groups.length;gi++){ html += buildGroupHTML(p.groups[gi]); }
+    html += '</div></div>';
+    html += '<div class="passctrl">'
+          + '<button class="btn btn-out btn-sm" data-reveal="'+pi+'">👁 Reveal Answers</button>'
+          + '<button class="btn btn-ghost btn-sm" data-clear="'+pi+'">↺ Clear Answers</button>'
+          + '<span class="passtally" id="tally'+pi+'"></span>'
+          + '</div>';
+    html += '</div>';
+  }
+  wrap.innerHTML=html;
+  attachEvents();
+}
+
+/* ============================ EVENTS ============================ */
+function attachEvents(){
+  var ins=document.querySelectorAll('input[type=text]');
+  for(var i=0;i<ins.length;i++){
+    ins[i].addEventListener('input',function(e){ state[e.target.id.replace('in','')]=e.target.value; updateProgress(); });
+  }
+  var sels=document.querySelectorAll('select');
+  for(var s=0;s<sels.length;s++){
+    sels[s].addEventListener('change',function(e){ state[e.target.id.replace('in','')]=e.target.value; updateProgress(); });
+  }
+  var labs=document.querySelectorAll('label.opt[data-q]');
+  for(var r=0;r<labs.length;r++){
+    labs[r].addEventListener('click',function(e){
+      var q=this.getAttribute('data-q');
+      if(isRevealedForQ(q)){ e.preventDefault(); return; }
+      var v=this.getAttribute('data-v');
+      state[q]=v;
+      var sib=document.querySelectorAll('label.opt[data-q="'+q+'"]');
+      for(var x=0;x<sib.length;x++){ sib[x].classList.remove('sel'); }
+      this.classList.add('sel');
+      var inp=this.querySelector('input'); if(inp) inp.checked=true;
+      updateProgress();
+    });
+  }
+  var two=document.querySelectorAll('label.opt[data-two]');
+  for(var t=0;t<two.length;t++){
+    two[t].addEventListener('click',function(e){
+      var gid=this.getAttribute('data-two');
+      if(isRevealedForGid(gid)){ e.preventDefault(); return; }
+      var v=this.getAttribute('data-v');
+      var arr=twoState[gid];
+      var idx=arr.indexOf(v);
+      var box=this.querySelector('input');
+      if(idx>-1){ arr.splice(idx,1); this.classList.remove('sel'); box.checked=false; }
+      else { if(arr.length>=2){ e.preventDefault(); box.checked=false; return; } arr.push(v); this.classList.add('sel'); box.checked=true; }
+      updateProgress();
+    });
+  }
+  var tabs=document.querySelectorAll('.tab');
+  for(var tb=0;tb<tabs.length;tb++){
+    tabs[tb].addEventListener('click',function(){
+      var p=this.getAttribute('data-p');
+      var allt=document.querySelectorAll('.tab');
+      for(var a=0;a<allt.length;a++) allt[a].classList.remove('active');
+      this.classList.add('active');
+      var pans=document.querySelectorAll('.panel');
+      for(var b=0;b<pans.length;b++){ pans[b].classList.toggle('active', pans[b].getAttribute('data-panel')===p); }
+      window.scrollTo({top:0,behavior:'smooth'});
+    });
+  }
+  var revs=document.querySelectorAll('[data-reveal]');
+  for(var rv=0;rv<revs.length;rv++){ revs[rv].addEventListener('click',function(){ revealPassage(parseInt(this.getAttribute('data-reveal'),10)); }); }
+  var cls=document.querySelectorAll('[data-clear]');
+  for(var cl=0;cl<cls.length;cl++){ cls[cl].addEventListener('click',function(){ clearPassage(parseInt(this.getAttribute('data-clear'),10)); }); }
+}
+
+function passageOfQ(qid){
+  qid=parseInt(qid,10);
+  if(qid<=13) return 0;
+  if(qid<=26) return 1;
+  return 2;
+}
+function isRevealedForQ(qid){ return passScore[passageOfQ(qid)]!==null; }
+function isRevealedForGid(gid){ return passScore[1]!==null; }
+
+/* ============================ PROGRESS ============================ */
+function countAnswered(){
+  var n=0;
+  for(var pi=0;pi<PASSAGES.length;pi++){
+    var p=PASSAGES[pi];
+    for(var gi=0;gi<p.groups.length;gi++){
+      var g=p.groups[gi];
+      if(g.type==="two"){ if(twoState[g.gid].length===2) n+=2; }
+      else if(g.qs){
+        for(var qi=0;qi<g.qs.length;qi++){
+          var v=state[g.qs[qi].id];
+          if(v!==undefined && String(v).trim()!=="") n++;
+        }
+      }
+    }
+  }
+  return n;
+}
+function cumulativeCorrect(){
+  var c=0;
+  for(var i=0;i<3;i++){ if(passScore[i]!==null) c+=passScore[i]; }
+  return c;
+}
+function updateProgress(){
+  document.getElementById('answered').textContent=countAnswered();
+  document.getElementById('correctCount').textContent=cumulativeCorrect();
+}
+
+/* ============================ GRADING ============================ */
+function gradeText(q){
+  var v=normalize(state[q.id]);
+  for(var i=0;i<q.ans.length;i++){ if(v===normalize(q.ans[i])) return true; }
+  return false;
+}
+
+function revealPassage(pi){
+  if(passScore[pi]!==null) return;
+  var p=PASSAGES[pi], correct=0;
+  for(var gi=0;gi<p.groups.length;gi++){
+    var g=p.groups[gi];
+    if(g.type==="two"){
+      var labels=document.querySelectorAll('label.opt[data-two="'+g.gid+'"]');
+      for(var li=0;li<labels.length;li++){
+        var lv=labels[li].getAttribute('data-v');
+        var chosen=twoState[g.gid].indexOf(lv)>-1;
+        var isAns=g.ans.indexOf(lv)>-1;
+        labels[li].classList.remove('sel');
+        if(isAns){ labels[li].classList.add('correct'); }
+        else if(chosen){ labels[li].classList.add('wrong'); }
+      }
+      var got=0; for(var c2=0;c2<twoState[g.gid].length;c2++){ if(g.ans.indexOf(twoState[g.gid][c2])>-1) got++; }
+      correct+=got;
+      var note=document.getElementById(g.gid+'note');
+      note.style.display='block';
+      note.className='inline-note '+(got===2?'ok':'no');
+      note.textContent=(got===2?'\u2713 Correct \u2014 ':'\u2717 ')+'Answers: '+g.ans.join(' and ')+'  ('+got+'/2)';
+      var w=document.getElementById(g.gid+'why');
+      w.classList.add('show');
+      w.innerHTML='<b>📖 From the text:</b> '+esc(g.why);
+      continue;
+    }
+    if(g.type==="gapfill"||g.type==="matchfill"){ var fcr=document.getElementById('gapfb_'+g.gid); if(fcr) fcr.style.display='block'; }
+    if(!g.qs) continue;
+    for(var qi=0;qi<g.qs.length;qi++){
+      var q=g.qs[qi], ok=false;
+      var note2=document.getElementById('note'+q.id);
+      if(q.type==="text"){
+        ok=gradeText(q);
+        document.getElementById('fw'+q.id).classList.add(ok?'ok':'no');
+        document.getElementById('in'+q.id).disabled=true;
+        note2.style.display='block'; note2.className='inline-note '+(ok?'ok':'no');
+        note2.textContent=ok?'\u2713 Correct':'\u2717 Correct answer: '+q.ans[0];
+      } else if(q.type==="para"||q.type==="match"){
+        ok=(String(state[q.id])===String(q.ans));
+        document.getElementById('fw'+q.id).classList.add(ok?'ok':'no');
+        document.getElementById('in'+q.id).disabled=true;
+        note2.style.display='block'; note2.className='inline-note '+(ok?'ok':'no');
+        note2.textContent=ok?'\u2713 Correct':'\u2717 Correct answer: '+q.ans;
+      } else {
+        ok=(String(state[q.id])===String(q.ans));
+        var ls=document.querySelectorAll('label.opt[data-q="'+q.id+'"]');
+        for(var k=0;k<ls.length;k++){
+          var lv2=ls[k].getAttribute('data-v');
+          ls[k].classList.remove('sel');
+          if(lv2===String(q.ans)){ ls[k].classList.add('correct'); }
+          else if(lv2===String(state[q.id])){ ls[k].classList.add('wrong'); }
+        }
+        note2.style.display='block'; note2.className='inline-note '+(ok?'ok':'no');
+        note2.textContent=ok?'\u2713 Correct':'\u2717 Correct answer: '+q.ans;
+      }
+      if(ok) correct++;
+      var wy=document.getElementById('why'+q.id);
+      wy.classList.add('show');
+      wy.innerHTML='<b>📖 From the text:</b> '+esc(q.why);
+    }
+  }
+  passScore[pi]=correct;
+
+  document.getElementById('tally'+pi).textContent='Passage '+(pi+1)+': '+correct+' / '+PASS_TOTAL[pi]+' correct';
+  var rbtn=document.querySelector('[data-reveal="'+pi+'"]');
+  rbtn.disabled=true; rbtn.textContent='✓ Answers Revealed';
+  updateProgress();
+}
+
+function clearPassage(pi){
+  var p=PASSAGES[pi];
+  for(var gi=0;gi<p.groups.length;gi++){
+    var g=p.groups[gi];
+    if(g.type==="two"){
+      twoState[g.gid]=[];
+      var labels=document.querySelectorAll('label.opt[data-two="'+g.gid+'"]');
+      for(var li=0;li<labels.length;li++){
+        labels[li].classList.remove('sel','correct','wrong');
+        var bx=labels[li].querySelector('input'); if(bx) bx.checked=false;
+      }
+      var note=document.getElementById(g.gid+'note'); note.style.display='none'; note.textContent='';
+      document.getElementById(g.gid+'why').classList.remove('show');
+      continue;
+    }
+    if(g.type==="gapfill"||g.type==="matchfill"){ var fch=document.getElementById('gapfb_'+g.gid); if(fch) fch.style.display='none'; }
+    if(!g.qs) continue;
+    for(var qi=0;qi<g.qs.length;qi++){
+      var q=g.qs[qi];
+      delete state[q.id];
+      var note2=document.getElementById('note'+q.id); note2.style.display='none'; note2.textContent='';
+      document.getElementById('why'+q.id).classList.remove('show');
+      if(q.type==="text"){
+        var inp=document.getElementById('in'+q.id); inp.value=''; inp.disabled=false;
+        document.getElementById('fw'+q.id).classList.remove('ok','no');
+      } else if(q.type==="para"||q.type==="match"){
+        var sl=document.getElementById('in'+q.id); sl.value=''; sl.disabled=false;
+        document.getElementById('fw'+q.id).classList.remove('ok','no');
+      } else {
+        var ls=document.querySelectorAll('label.opt[data-q="'+q.id+'"]');
+        for(var k=0;k<ls.length;k++){ ls[k].classList.remove('sel','correct','wrong'); var ip=ls[k].querySelector('input'); if(ip) ip.checked=false; }
+      }
+    }
+  }
+  passScore[pi]=null;
+  document.getElementById('tally'+pi).textContent='';
+  var rbtn=document.querySelector('[data-reveal="'+pi+'"]');
+  rbtn.disabled=false; rbtn.textContent='👁 Reveal Answers';
+  finished=false;
+  document.getElementById('bandNum').textContent='\u2014';
+  document.getElementById('result').classList.remove('show');
+  document.getElementById('finishBtn').disabled=false;
+  document.getElementById('finishBtn').textContent='🏁 Finish Test & Get Band';
+  updateProgress();
+}
+
+/* ============================ FINISH / BAND ============================ */
+function bandFor(raw){
+  if(raw>=39) return "9.0";
+  if(raw>=37) return "8.5";
+  if(raw>=35) return "8.0";
+  if(raw>=33) return "7.5";
+  if(raw>=30) return "7.0";
+  if(raw>=27) return "6.5";
+  if(raw>=23) return "6.0";
+  if(raw>=19) return "5.5";
+  if(raw>=15) return "5.0";
+  if(raw>=13) return "4.5";
+  if(raw>=10) return "4.0";
+  if(raw>=8)  return "3.5";
+  if(raw>=6)  return "3.0";
+  if(raw>=4)  return "2.5";
+  return "<2.5";
+}
+
+function finishTest(){
+  for(var pi=0;pi<3;pi++){ if(passScore[pi]===null) revealPassage(pi); }
+  finished=true;
+  var total=cumulativeCorrect();
+  var band=bandFor(total);
+  document.getElementById('bandNum').textContent=band;
+
+  var r=document.getElementById('result'); r.classList.add('show');
+  document.getElementById('rScore').textContent=total+' / 40';
+  document.getElementById('rBand').textContent='Estimated Band: '+band;
+
+  var bandNum=parseFloat(band);
+  var msg;
+  if(!isNaN(bandNum) && bandNum>=6){
+    msg='\uD83C\uDFAF Target reached! You hit Band 6.0 or above on real Academic content. Excellent reading \u2014 keep it consistent across all three passages.';
+    fireConfetti();
+  } else if(total>=19){
+    msg='Solid work \u2014 close to the Band 6.0 target. Review the items you missed (especially NOT GIVEN and summary-completion answers) and read the justification under each one.';
+  } else {
+    msg='Good effort. For completion tasks, look for the exact word in the passage; for True/False/Not Given, remember FALSE means the text disagrees while NOT GIVEN means the text is silent. The justification under each wrong answer shows where to look.';
+  }
+  document.getElementById('rMsg').textContent=msg;
+  document.getElementById('rBreak').innerHTML=
+      '<span>Passage 1: '+passScore[0]+'/13</span>'
+     +'<span>Passage 2: '+passScore[1]+'/13</span>'
+     +'<span>Passage 3: '+passScore[2]+'/14</span>';
+
+  var fb=document.getElementById('finishBtn');
+  fb.disabled=true; fb.textContent='🏁 Test Finished';
+  r.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+/* ============================ SAVE / LOAD / RESET ============================ */
+function saveProgress(){
+  var data={ v:5, state:state, two:twoState, passScore:passScore, finished:finished };
+  var blob=new Blob([JSON.stringify(data)],{type:'application/json'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  a.href=url; a.download='IELTS-Reading-R5-progress.json';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+function loadProgress(file){
+  var reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      var data=JSON.parse(e.target.result);
+      state=data.state||{};
+      twoState=data.two||{q23:[],q25:[]};
+      if(!twoState.q23) twoState.q23=[];
+      if(!twoState.q25) twoState.q25=[];
+      passScore=[null,null,null];
+      finished=false;
+      render();
+      restoreInputs();
+      var savedScores=data.passScore||[null,null,null];
+      for(var pi=0;pi<3;pi++){ if(savedScores[pi]!==null) revealPassage(pi); }
+      if(data.finished){ finishTest(); }
+      updateProgress();
+      alert('\u2705 Progress loaded. Your saved answers have been restored.');
+    }catch(err){
+      alert('\u26A0\uFE0F Could not read this file. Please choose a valid saved-progress file (.json).');
+    }
+  };
+  reader.readAsText(file);
+}
+function restoreInputs(){
+  for(var key in state){
+    if(!state.hasOwnProperty(key)) continue;
+    var el=document.getElementById('in'+key);
+    if(el){ el.value=state[key]; }
+    else {
+      var labs=document.querySelectorAll('label.opt[data-q="'+key+'"]');
+      for(var i=0;i<labs.length;i++){
+        if(labs[i].getAttribute('data-v')===String(state[key])){
+          labs[i].classList.add('sel'); var inp=labs[i].querySelector('input'); if(inp) inp.checked=true;
+        } else { labs[i].classList.remove('sel'); }
+      }
+    }
+  }
+  var gids=['q23','q25'];
+  for(var gz=0;gz<gids.length;gz++){
+    var gid=gids[gz], sel=twoState[gid]||[];
+    var two=document.querySelectorAll('label.opt[data-two="'+gid+'"]');
+    for(var t=0;t<two.length;t++){
+      var v=two[t].getAttribute('data-v'), box=two[t].querySelector('input');
+      if(sel.indexOf(v)>-1){ two[t].classList.add('sel'); box.checked=true; }
+      else { two[t].classList.remove('sel'); box.checked=false; }
+    }
+  }
+}
+function resetAll(){
+  if(!confirm('Reset everything and start the whole test again?')) return;
+  state={}; twoState={q23:[],q25:[]}; passScore=[null,null,null]; finished=false;
+  render();
+  document.getElementById('answered').textContent='0';
+  document.getElementById('correctCount').textContent='0';
+  document.getElementById('bandNum').textContent='\u2014';
+  document.getElementById('result').classList.remove('show');
+  var fb=document.getElementById('finishBtn'); fb.disabled=false; fb.textContent='🏁 Finish Test & Get Band';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ============================ CONFETTI ============================ */
+function fireConfetti(){
+  var colors=['#C99A2E','#1B4D3E','#EAC669','#2D6A4F','#fff'];
+  for(var i=0;i<90;i++){
+    (function(){
+      var d=document.createElement('div');
+      var size=6+Math.random()*8;
+      d.style.position='fixed'; d.style.left=(Math.random()*100)+'vw'; d.style.top='-20px';
+      d.style.width=size+'px'; d.style.height=size+'px';
+      d.style.background=colors[Math.floor(Math.random()*colors.length)];
+      d.style.borderRadius=Math.random()>.5?'50%':'2px';
+      d.style.zIndex='9999'; d.style.pointerEvents='none'; d.style.opacity='0.9';
+      document.body.appendChild(d);
+      var dur=2200+Math.random()*1800, drift=(Math.random()*200-100), start=null;
+      function step(ts){
+        if(!start) start=ts;
+        var pr=(ts-start)/dur;
+        if(pr>=1){ d.remove(); return; }
+        d.style.transform='translate('+(drift*pr)+'px,'+(pr*(window.innerHeight+60))+'px) rotate('+(pr*720)+'deg)';
+        d.style.opacity=String(0.9*(1-pr));
+        requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    })();
+  }
+}
+
+/* ============================ INIT ============================ */
+render();
+document.getElementById('finishBtn').addEventListener('click',finishTest);
+document.getElementById('saveBtn').addEventListener('click',saveProgress);
+document.getElementById('resetBtn').addEventListener('click',resetAll);
+document.getElementById('loadBtn').addEventListener('click',function(){ document.getElementById('fileIn').click(); });
+document.getElementById('fileIn').addEventListener('change',function(e){
+  if(e.target.files && e.target.files[0]){ loadProgress(e.target.files[0]); e.target.value=''; }
+});
+</script>
+</body>
+</html>
